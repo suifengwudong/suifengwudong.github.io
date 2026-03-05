@@ -1,0 +1,17 @@
+{
+  "name": "suifengwudong.github.io",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "npm run setup-typst && npm run typst && astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "setup-typst": "powershell -Command \"if (!(Test-Path typst.exe)) { Invoke-WebRequest -Uri 'https://github.com/typst/typst/releases/latest/download/typst-x86_64-pc-windows-msvc.zip' -OutFile typst.zip; Expand-Archive typst.zip .; Move-Item typst-x86_64-pc-windows-msvc/typst.exe .; Remove-Item typst.zip, typst-x86_64-pc-windows-msvc -Recurse }\"",
+    "typst": "typst compile src/typst/sample.typ public/sample.svg"
+  },
+  "dependencies": {
+    "astro": "^4.0.0"
+  }
+}
