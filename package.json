@@ -8,7 +8,7 @@
     "build": "npm run setup-typst && npm run typst && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "setup-typst": "powershell -Command \"if (!(Test-Path typst.exe)) { Invoke-WebRequest -Uri 'https://github.com/typst/typst/releases/latest/download/typst-x86_64-pc-windows-msvc.zip' -OutFile typst.zip; Expand-Archive typst.zip .; Move-Item typst-x86_64-pc-windows-msvc/typst.exe .; Remove-Item typst.zip, typst-x86_64-pc-windows-msvc -Recurse }\"",
+    "setup-typst": "powershell -Command \"if (!(Get-Command typst -ErrorAction SilentlyContinue)) { Invoke-WebRequest -Uri 'https://github.com/typst/typst/releases/latest/download/typst-x86_64-pc-windows-msvc.zip' -OutFile typst.zip; Expand-Archive typst.zip .; Move-Item typst-x86_64-pc-windows-msvc/typst.exe .; Remove-Item typst.zip, typst-x86_64-pc-windows-msvc -Recurse }\"",
     "typst": "typst compile src/typst/sample.typ public/sample.svg"
   },
   "dependencies": {

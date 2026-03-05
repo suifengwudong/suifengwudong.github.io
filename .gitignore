@@ -29,3 +29,6 @@ Thumbs.db
 # Typst temporary files (if any)
 *.pdf
 *.svg
+
+# Temporary directories
+extra-ephemera/
