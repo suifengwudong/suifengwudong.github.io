@@ -125,7 +125,7 @@ const { title, pdfPath, sourceCodePath, description } = Astro.props;
 				overflow: hidden;
 				box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
 			}
-			.pdf-container iframe {
+			.pdf-container object {
 				width: 100%;
 				height: 800px;
 				border: none;
@@ -189,7 +189,11 @@ const { title, pdfPath, sourceCodePath, description } = Astro.props;
 
 		<main class="container">
 			<div class="pdf-container">
-				<iframe src={pdfPath} title={title}></iframe>
+				<object data={pdfPath} type="application/pdf" title={title}>
+					<p>您的浏览器不支持 PDF 嵌入显示。
+						<a href={pdfPath} target="_blank">点击这里在新标签页中查看 PDF</a>
+					</p>
+				</object>
 			</div>
 			<div class="legacy-note">
 				<strong>注：</strong>Typst HTML 实时渲染功能因官方实验性功能暂不成熟（数学公式解析限制）已转为 PDF 直读模式。
@@ -198,13 +202,13 @@ const { title, pdfPath, sourceCodePath, description } = Astro.props;
 		</main>
 		<script>
 			document.getElementById('fullscreen-btn')?.addEventListener('click', function() {
-				const iframe = document.querySelector('.pdf-container iframe') as HTMLIFrameElement;
-				if (iframe?.requestFullscreen) {
-					iframe.requestFullscreen();
-				} else if ((iframe as any)?.webkitRequestFullscreen) { // Safari
-					(iframe as any).webkitRequestFullscreen();
-				} else if ((iframe as any)?.msRequestFullscreen) { // IE11
-					(iframe as any).msRequestFullscreen();
+				const object = document.querySelector('.pdf-container object') as HTMLObjectElement;
+				if (object?.requestFullscreen) {
+					object.requestFullscreen();
+				} else if ((object as any)?.webkitRequestFullscreen) { // Safari
+					(object as any).webkitRequestFullscreen();
+				} else if ((object as any)?.msRequestFullscreen) { // IE11
+					(object as any).msRequestFullscreen();
 				}
 			});
 		</script>

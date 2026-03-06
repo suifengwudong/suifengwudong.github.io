@@ -27,7 +27,7 @@ Thumbs.db
 *.log
 
 # Typst temporary files (if any)
-*.pdf
+# *.pdf  # 移除此规则，因为 public 目录下的 PDF 需要被跟踪
 *.svg
 
 # Temporary directories
