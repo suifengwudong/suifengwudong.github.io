@@ -9,9 +9,9 @@
     "preview": "astro preview",
     "astro": "astro",
     "setup-typst": "powershell -Command \"if (!(Get-Command typst -ErrorAction SilentlyContinue)) { Invoke-WebRequest -Uri 'https://github.com/typst/typst/releases/latest/download/typst-x86_64-pc-windows-msvc.zip' -OutFile typst.zip; Expand-Archive typst.zip .; Move-Item typst-x86_64-pc-windows-msvc/typst.exe .; Remove-Item typst.zip, typst-x86_64-pc-windows-msvc -Recurse }\"",
-    "typst": "mkdir -p public && typst compile src/typst/sample.typ public/sample.svg"
+    "typst": "node -e \"require('fs').mkdirSync('public', {recursive: true})\" && typst compile src/typst/sample.typ public/sample.svg"
   },
   "dependencies": {
-    "astro": "^4.0.0"
+    "astro": "^5.18.0"
   }
 }
