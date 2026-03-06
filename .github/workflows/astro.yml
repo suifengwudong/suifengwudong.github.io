@@ -76,6 +76,12 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: ${{ env.BUILD_PATH }}/dist
+      - name: Delete old workflow runs
+        run: |
+          # Get all run IDs for this workflow, sort by creation time (newest first), skip the first (current), delete the rest
+          gh run list --workflow astro.yml --json databaseId,createdAt --order desc -q '.[1:].[].databaseId' | xargs -I {} gh run delete {} || true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   deploy:
     environment:
