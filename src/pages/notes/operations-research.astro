@@ -16,12 +16,9 @@ const title = "运筹学：确定性方法";
 		</div>
 		<main>
 			<h1>{title}</h1>
-			<p>笔记以 PDF 格式提供：</p>
-			<a href="/notes/operations-research.pdf" download>下载运筹学笔记 PDF</a>
-			<p>或在浏览器中查看：</p>
-			<object data="/notes/operations-research.pdf" type="application/pdf" width="100%" height="600px">
-				<p>您的浏览器不支持 PDF 显示。请 <a href="/notes/operations-research.pdf">下载 PDF</a> 查看。</p>
-			</object>
+			<div style="width: 100%; height: 600px; overflow: auto;">
+				<iframe src="/notes/operations-research.html" width="100%" height="100%" frameborder="0"></iframe>
+			</div>
 		</main>
 	</body>
 </html>
