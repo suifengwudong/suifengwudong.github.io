@@ -197,14 +197,14 @@ const { title, pdfPath, sourceCodePath, description } = Astro.props;
 			</div>
 		</main>
 		<script>
-			document.getElementById('fullscreen-btn').addEventListener('click', function() {
-				const iframe = document.querySelector('.pdf-container iframe');
-				if (iframe.requestFullscreen) {
+			document.getElementById('fullscreen-btn')?.addEventListener('click', function() {
+				const iframe = document.querySelector('.pdf-container iframe') as HTMLIFrameElement;
+				if (iframe?.requestFullscreen) {
 					iframe.requestFullscreen();
-				} else if (iframe.webkitRequestFullscreen) { // Safari
-					iframe.webkitRequestFullscreen();
-				} else if (iframe.msRequestFullscreen) { // IE11
-					iframe.msRequestFullscreen();
+				} else if ((iframe as any)?.webkitRequestFullscreen) { // Safari
+					(iframe as any).webkitRequestFullscreen();
+				} else if ((iframe as any)?.msRequestFullscreen) { // IE11
+					(iframe as any).msRequestFullscreen();
 				}
 			});
 		</script>
