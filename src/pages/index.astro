@@ -5,9 +5,9 @@ const title = "Home";
 const response = await fetch('https://api.github.com/users/suifengwudong/repos?sort=stars&per_page=6');
 const repos = await response.json();
 
-// Filter and sort repositories: public, not forked, with description
+// Filter and sort repositories: public, not forked, with description, exclude this repo
 const projects = repos
-  .filter(repo => !repo.fork && repo.description && repo.stargazers_count >= 0)
+  .filter(repo => !repo.fork && repo.description && repo.stargazers_count >= 0 && repo.name !== 'suifengwudong.github.io')
   .sort((a, b) => b.stargazers_count - a.stargazers_count)
   .slice(0, 6);
 ---
