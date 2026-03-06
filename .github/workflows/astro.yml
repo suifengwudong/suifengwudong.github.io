@@ -60,18 +60,11 @@ jobs:
           node-version: "20"
           cache: ${{ steps.detect-package-manager.outputs.manager }}
           cache-dependency-path: ${{ env.BUILD_PATH }}/${{ steps.detect-package-manager.outputs.lockfile }}
-      - name: Setup Typst
-        uses: typst-community/setup-typst@v3
-        with:
-          typst-version: latest
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
-        working-directory: ${{ env.BUILD_PATH }}
-      - name: Compile Typst
-        run: npm run typst
         working-directory: ${{ env.BUILD_PATH }}
       - name: Build with Astro
         run: |
