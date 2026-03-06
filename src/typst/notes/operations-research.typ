@@ -2084,7 +2084,7 @@ $x_1 = 5 / 3$, $x_2 = 5 / 3$, $z = 10 / 3$。
 显示了连续可行域（浅蓝色区域）以及整数格点（红色点）。根据几何直观，最优整数解为
 $x_1 = 1$, $x_2 = 2$ 或 $x_1 = 2$, $x_2 = 1$, $z = 3$（绿色星号）。
 
-// Image removed: integer_lp_plot.png
+#figure(image("integer_lp_plot.png", width: 80.0%), caption: [整数线性规划可行域与整数点])
   caption: [
     整数线性规划可行域与整数点
   ]
