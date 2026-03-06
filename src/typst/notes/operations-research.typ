@@ -1,4 +1,11 @@
 #set heading(numbering: "1.")
+#set text(font: "Times New Roman", size: 12pt)
+#set page(margin: 1in)
+#set par(leading: 0.8em)
+
+#let dfn(body) = block(fill: rgb("#f0f8ff"), inset: 10pt, stroke: 1pt + rgb("#4682b4"), [*定义*：#body])
+#let theorem(body) = block(fill: rgb("#fffacd"), inset: 10pt, stroke: 1pt + rgb("#daa520"), [*定理*：#body])
+#let proof(body) = block(fill: rgb("#f5f5f5"), inset: 10pt, stroke: 0.5pt + rgb("#696969"), [*证明*：#body])
 
 = 数学规划与运筹学
 <sec:math_or>
