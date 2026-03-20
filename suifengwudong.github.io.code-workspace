@@ -5,7 +5,6 @@
 		}
 	],
 	"settings": {
-		"vsc-sort-imports.on_save": true,
 		"editor.formatOnSave": true,
 		"eslint.validate": [
 			"javascript",
@@ -24,7 +23,12 @@
 			"christian-kohler.path-intellisense",
 			"formulahendry.auto-rename-tag",
 			"streetsidesoftware.code-spell-checker-chinese",
-			"myriad-dreamin.tinymist"
+			"myriad-dreamin.tinymist",
+			"bradlc.vscode-tailwindcss",
+			"formulahendry.auto-rename-tag",
+			"dbaeumer.vscode-eslint",
+			"esbenp.prettier-vscode",
+			"christian-kohler.path-intellisense"
 		]
 	}
 }
