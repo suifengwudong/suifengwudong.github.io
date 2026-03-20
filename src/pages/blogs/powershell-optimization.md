@@ -1,7 +1,9 @@
 ---
-layout: ../../layouts/PdfNoteLayout.astro
+layout: ../../layouts/BlogLayout.astro
 title: "PowerShell 启动卡顿诊断：Conda 初始化的 1.5s 延迟与优化方案"
-pdfPath: ""
+pubDate: "2026-03-20"
+author: "Suifeng Wudong"
+tags: ["PowerShell", "Conda", "优化", "Windows"]
 description: "通过将 Conda 初始化迁移至 PowerShell 7 并实施懒加载技术，成功将终端启动延迟从 2 秒缩短至 300 毫秒。"
 ---
 
