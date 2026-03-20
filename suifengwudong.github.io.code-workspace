@@ -1,0 +1,30 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"vsc-sort-imports.on_save": true,
+		"editor.formatOnSave": true,
+		"eslint.validate": [
+			"javascript",
+			"javascriptreact",
+			"astro",
+			"typescript",
+			"typescriptreact"
+		]
+	},
+	"extensions": {
+		"recommendations": [
+			"astro-build.astro-vscode",
+			"esbenp.prettier-vscode",
+			"dbaeumer.vscode-eslint",
+			"bradlc.vscode-tailwindcss",
+			"christian-kohler.path-intellisense",
+			"formulahendry.auto-rename-tag",
+			"streetsidesoftware.code-spell-checker-chinese",
+			"myriad-dreamin.tinymist"
+		]
+	}
+}
