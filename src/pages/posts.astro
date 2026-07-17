@@ -1,18 +1,27 @@
 ---
+interface Post {
+  slug: string;
+  title: string;
+  date: string;
+  desc: string;
+  tags: string[];
+  type: "blog" | "note";
+}
+
 const title = "Posts";
 
-const blogPosts = Object.values(await import.meta.glob('./blogs/*.md', { eager: true }))
-  .map(m => ({
+const blogPosts: Post[] = Object.values(import.meta.glob('./blogs/*.md', { eager: true }))
+  .map((m: any) => ({
     slug: m.url?.replace('/blogs/', '').replace('/', ''),
-    title: m.frontmatter?.title || "untitled",
+    title: m.frontmatter?.title || "",
     date: m.frontmatter?.pubDate || "",
     desc: m.frontmatter?.description || "",
     tags: m.frontmatter?.tags || [],
-    type: "blog",
+    type: "blog" as const,
   }))
   .sort((a, b) => b.date.localeCompare(a.date));
 
-const notePosts = [
+const notePosts: Post[] = [
   {
     slug: "operations-research",
     title: "运筹学：确定性方法",
@@ -182,7 +191,7 @@ const rest = allPosts.slice(1);
           <h2>{featured.title}</h2>
           <p>{featured.desc}</p>
           <div class="tags">
-            {featured.tags.map(t => <span>{t}</span>)}
+            {featured.tags.map((t: string) => <span>{t}</span>)}
           </div>
         </a>
 
@@ -203,7 +212,7 @@ const rest = allPosts.slice(1);
                 <span class="item-title">{post.title}</span>
               </div>
               <div class="item-tags">
-                {post.tags.slice(0, 3).map(t => <span>{t}</span>)}
+                {post.tags.slice(0, 3).map((t: string) => <span>{t}</span>)}
               </div>
             </a>
           ))}
@@ -212,13 +221,12 @@ const rest = allPosts.slice(1);
     </main>
 
     <script>
-      function switchTab(tab) {
+      function switchTab(tab: string) {
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
-        document.getElementById('postList').setAttribute('data-filter', tab);
+        document.querySelector(`[data-tab="${tab}"]`)?.classList.add('active');
+        document.getElementById('postList')?.setAttribute('data-filter', tab);
       }
-      // 暴露到全局
-      window.switchTab = switchTab;
+      (window as any).switchTab = switchTab;
     </script>
   </body>
 </html>
