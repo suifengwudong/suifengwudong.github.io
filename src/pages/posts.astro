@@ -1,0 +1,224 @@
+---
+const title = "Posts";
+
+const blogPosts = Object.values(await import.meta.glob('./blogs/*.md', { eager: true }))
+  .map(m => ({
+    slug: m.url?.replace('/blogs/', '').replace('/', ''),
+    title: m.frontmatter?.title || "untitled",
+    date: m.frontmatter?.pubDate || "",
+    desc: m.frontmatter?.description || "",
+    tags: m.frontmatter?.tags || [],
+    type: "blog",
+  }))
+  .sort((a, b) => b.date.localeCompare(a.date));
+
+const notePosts = [
+  {
+    slug: "operations-research",
+    title: "运筹学：确定性方法",
+    date: "2026-01-01",
+    desc: "线性规划、对偶理论、单纯形法以及整数规划的深度解析。包含大量的数学公式与算法实现。",
+    tags: ["运筹学", "数学"],
+    type: "note",
+  },
+];
+
+const allPosts = [...blogPosts, ...notePosts].sort((a, b) => b.date.localeCompare(a.date));
+const featured = allPosts[0];
+const rest = allPosts.slice(1);
+---
+
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title} | Suifeng Wudong</title>
+    <style>
+      :root {
+        --bg: #ffffff;
+        --text: #1e293b;
+        --muted: #64748b;
+        --accent: #0284c7;
+        --border: #e2e8f0;
+        --card-bg: #f8fafc;
+        --max-w: 800px;
+      }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        line-height: 1.6;
+        margin: 0;
+        padding: 0;
+        background: var(--bg);
+        color: var(--text);
+      }
+      .header {
+        background: rgba(255,255,255,0.8);
+        backdrop-filter: blur(8px);
+        padding: 1rem 2rem;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+      .logo { font-size: 1.25rem; font-weight: 700; color: var(--accent); text-decoration: none; }
+      .nav { display: flex; gap: 2rem; }
+      .nav a { color: var(--muted); text-decoration: none; font-weight: 500; }
+      .nav a:hover { color: var(--accent); }
+
+      main { max-width: var(--max-w); margin: 0 auto; padding: 3rem 2rem; }
+
+      h1 { font-size: 2.5rem; font-weight: 800; margin: 0 0 0.25rem; color: #0f172a; }
+      .subtitle { color: var(--muted); margin: 0 0 2rem; font-size: 1.05rem; }
+
+      .featured {
+        display: block;
+        padding: 2rem;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        margin-bottom: 2.5rem;
+        text-decoration: none;
+        color: inherit;
+        transition: border-color 0.2s, box-shadow 0.2s;
+      }
+      .featured:hover {
+        border-color: var(--accent);
+        box-shadow: 0 8px 25px -8px rgba(2,132,199,0.12);
+      }
+      .featured .meta { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.75rem; }
+      .featured h2 { margin: 0 0 0.75rem; font-size: 1.4rem; color: #0f172a; line-height: 1.3; }
+      .featured p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+      .featured .tags { display: flex; gap: 0.4rem; margin-top: 1rem; flex-wrap: wrap; }
+      .featured .tags span {
+        background: var(--card-bg); padding: 0.15rem 0.5rem; border-radius: 4px;
+        font-size: 0.75rem; color: var(--muted);
+      }
+
+      .tabs {
+        display: flex; gap: 0.25rem; margin-bottom: 1.5rem;
+        background: var(--card-bg); padding: 0.25rem; border-radius: 8px;
+        width: fit-content;
+      }
+      .tab-btn {
+        padding: 0.4rem 1rem; border: none; background: transparent;
+        border-radius: 6px; cursor: pointer; font-size: 0.9rem; color: var(--muted);
+        font-family: inherit; transition: all 0.15s;
+      }
+      .tab-btn.active { background: white; color: var(--text); font-weight: 600; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+      .tab-btn:hover:not(.active) { color: var(--text); }
+
+      .list { display: flex; flex-direction: column; gap: 0; }
+      .list-item {
+        display: grid;
+        grid-template-columns: 6.5rem 1fr auto;
+        gap: 1.25rem;
+        align-items: baseline;
+        padding: 0.9rem 0;
+        text-decoration: none;
+        color: inherit;
+        border-bottom: 1px solid var(--border);
+        transition: opacity 0.15s;
+      }
+      .list-item:last-child { border-bottom: none; }
+      .list-item:hover .item-title { color: var(--accent); }
+      .item-date { font-size: 0.85rem; color: var(--muted); white-space: nowrap; font-feature-settings: "tnum"; }
+      .item-title { font-size: 1rem; transition: color 0.15s; }
+      .item-tags { display: flex; gap: 0.3rem; flex-wrap: wrap; }
+      .item-tags span {
+        background: var(--card-bg); padding: 0.1rem 0.4rem; border-radius: 3px;
+        font-size: 0.7rem; color: var(--muted);
+      }
+      .item-type {
+        font-size: 0.7rem; padding: 0.1rem 0.4rem; border-radius: 3px;
+        font-weight: 600; white-space: nowrap;
+      }
+      .type-blog { color: #0369a1; background: #e0f2fe; }
+      .type-note { color: #7c3aed; background: #ede9fe; }
+      .item-left { display: flex; align-items: center; gap: 0.75rem; }
+
+      [data-filter] .list-item { display: none; }
+      [data-filter="all"] .list-item { display: grid; }
+      [data-filter="blog"] .list-item[data-type="blog"] { display: grid; }
+      [data-filter="note"] .list-item[data-type="note"] { display: grid; }
+      [data-filter] .featured { display: none; }
+      [data-filter="all"] .featured { display: block; }
+
+      @media (max-width: 640px) {
+        .list-item { grid-template-columns: 1fr; gap: 0.15rem; padding: 0.75rem 0; }
+        .item-date { font-size: 0.75rem; order: 2; }
+        .item-title { order: 1; }
+        .item-tags { order: 3; }
+        h1 { font-size: 2rem; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <a href="/" class="logo">Suifeng Wudong</a>
+      <nav class="nav">
+        <a href="/">Home</a>
+        <a href="/posts">Posts</a>
+        <a href="/about">About</a>
+      </nav>
+    </header>
+
+    <main>
+      <h1>Posts</h1>
+      <p class="subtitle">
+        {blogPosts.length} 篇技术博客 · {notePosts.length} 篇学术笔记
+      </p>
+
+      <div id="app">
+        <a href="/{featured.type === 'blog' ? 'blogs' : 'notes'}/{featured.slug}/" class="featured">
+          <div class="meta">
+            <span class="item-type {featured.type === 'blog' ? 'type-blog' : 'type-note'}">
+              {featured.type === 'blog' ? '技术博客' : '学术笔记'}
+            </span>
+            &nbsp;·&nbsp; <span>{featured.date}</span>
+          </div>
+          <h2>{featured.title}</h2>
+          <p>{featured.desc}</p>
+          <div class="tags">
+            {featured.tags.map(t => <span>{t}</span>)}
+          </div>
+        </a>
+
+        <div class="tabs">
+          <button class="tab-btn active" data-tab="all" onclick="switchTab('all')">所有文章</button>
+          <button class="tab-btn" data-tab="blog" onclick="switchTab('blog')">技术博客</button>
+          <button class="tab-btn" data-tab="note" onclick="switchTab('note')">学术笔记</button>
+        </div>
+
+        <div class="list" data-filter="all" id="postList">
+          {rest.map(post => (
+            <a href="/{post.type === 'blog' ? 'blogs' : 'notes'}/{post.slug}/" class="list-item" data-type={post.type}>
+              <span class="item-date">{post.date}</span>
+              <div class="item-left">
+                <span class="item-type {post.type === 'blog' ? 'type-blog' : 'type-note'}">
+                  {post.type === 'blog' ? 'blog' : 'note'}
+                </span>
+                <span class="item-title">{post.title}</span>
+              </div>
+              <div class="item-tags">
+                {post.tags.slice(0, 3).map(t => <span>{t}</span>)}
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </main>
+
+    <script>
+      function switchTab(tab) {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+        document.getElementById('postList').setAttribute('data-filter', tab);
+      }
+      // 暴露到全局
+      window.switchTab = switchTab;
+    </script>
+  </body>
+</html>
